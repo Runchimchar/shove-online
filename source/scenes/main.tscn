@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://dyermsf8le20f"]
+[gd_scene load_steps=12 format=3 uid="uid://dyermsf8le20f"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sgp6g"]
+friction = 0.8
 bounce = 0.8
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sgp6g"]
@@ -9,6 +10,9 @@ bounce = 0.8
 
 [sub_resource type="SphereMesh" id="SphereMesh_o5qli"]
 material = SubResource("StandardMaterial3D_o5qli")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o5qli"]
+friction = 0.78
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_o5qli"]
 
@@ -40,7 +44,7 @@ sky = SubResource("Sky_o5qli")
 [node name="Node3D" type="Node3D"]
 
 [node name="Ball" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3612914, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.54536796, 2.3612914, -3.0371435)
 physics_material_override = SubResource("PhysicsMaterial_sgp6g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
@@ -51,6 +55,8 @@ gi_mode = 2
 mesh = SubResource("SphereMesh_o5qli")
 
 [node name="Table" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.9930828, -0.11741607, 0, 0.11741607, 0.9930828, 0, 0, 0)
+physics_material_override = SubResource("PhysicsMaterial_o5qli")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Table"]
 shape = SubResource("WorldBoundaryShape3D_o5qli")
