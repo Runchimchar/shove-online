@@ -1,15 +1,16 @@
-[gd_scene load_steps=12 format=3 uid="uid://dyermsf8le20f"]
+[gd_scene load_steps=17 format=3 uid="uid://dyermsf8le20f"]
+
+[ext_resource type="Material" uid="uid://bubi2ah5brv1i" path="res://assets/material/dark_mat.tres" id="2_jyhfs"]
+[ext_resource type="Material" uid="uid://dc3g8ykt45s0l" path="res://assets/material/light_mat.tres" id="4_jyhfs"]
+[ext_resource type="ArrayMesh" uid="uid://cjjgnntvkxl8" path="res://assets/meshes/token.obj" id="5_o6xl0"]
+[ext_resource type="Material" uid="uid://cfvbalnphmqqu" path="res://assets/material/board_mat.tres" id="5_tefeu"]
+[ext_resource type="ArrayMesh" uid="uid://cah18mj2u1mg2" path="res://assets/meshes/board.obj" id="7_85g3d"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sgp6g"]
 friction = 0.8
 bounce = 0.8
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sgp6g"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5qli"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_o5qli"]
-material = SubResource("StandardMaterial3D_o5qli")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o5qli"]
 friction = 0.78
@@ -41,18 +42,28 @@ sky_material = SubResource("ProceduralSkyMaterial_sgp6g")
 background_mode = 2
 sky = SubResource("Sky_o5qli")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_tbgi4"]
+size = Vector3(4.4455566, 0.125, 4.421875)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tbgi4"]
+radius = 0.26464844
+height = 1.036377
+
 [node name="Node3D" type="Node3D"]
 
 [node name="Ball" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.54536796, 2.3612914, -3.0371435)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.54536796, 1.7439733, -5.069332)
 physics_material_override = SubResource("PhysicsMaterial_sgp6g")
+linear_velocity = Vector3(-0.51, 9.96, 1.305)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
 shape = SubResource("SphereShape3D_sgp6g")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
+transform = Transform3D(2.995, 0, 0, 0, 2.995, 0, 0, 0, 2.995, 0, 0, 0)
 gi_mode = 2
-mesh = SubResource("SphereMesh_o5qli")
+mesh = ExtResource("5_o6xl0")
+surface_material_override/0 = ExtResource("2_jyhfs")
 
 [node name="Table" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.9930828, -0.11741607, 0, 0.11741607, 0.9930828, 0, 0, 0)
@@ -65,7 +76,7 @@ shape = SubResource("WorldBoundaryShape3D_o5qli")
 mesh = SubResource("PlaneMesh_sgp6g")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.5546412, -0.4604713, 0.6930652, 2.1653614e-08, 0.8329213, 0.55339146, -0.83208966, -0.3069336, 0.46197242, 2.8063066, 2.9763212, 1.7970462)
+transform = Transform3D(0.5546412, -0.46047127, 0.6930652, 2.1653614e-08, 0.8329213, 0.5533914, -0.83208966, -0.30693364, 0.46197245, 3.6344764, 2.9763212, 2.433504)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.3907312, 0.5755389, 0.7183899, -6.8227386e-08, -0.78043044, 0.6252426, 0.9205048, -0.24430186, -0.30493847, 2.6201847, -1.1920929e-07, -0.7365124)
@@ -74,3 +85,74 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0wfyh")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.70831716, 1.2748771, -0.5620022)
+
+[node name="Board" type="MeshInstance3D" parent="RigidBody3D"]
+transform = Transform3D(2.275, 0, 0, 0, 2.275, 0, 0, 0, 2.275, 0, 0, 0)
+material_override = ExtResource("5_tefeu")
+mesh = ExtResource("7_85g3d")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.028022766, -0.02286768)
+shape = SubResource("BoxShape3D_tbgi4")
+
+[node name="Light Tokens" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4096863, 1.4490464, 1.1157124)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Light Tokens"]
+
+[node name="Token" type="MeshInstance3D" parent="Light Tokens/RigidBody3D"]
+mesh = ExtResource("5_o6xl0")
+skeleton = NodePath("../../..")
+surface_material_override/0 = ExtResource("4_jyhfs")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Light Tokens/RigidBody3D"]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, -0.003733039, 0)
+shape = SubResource("CapsuleShape3D_tbgi4")
+
+[node name="Token2" type="MeshInstance3D" parent="Light Tokens"]
+transform = Transform3D(0.5547138, 0, 0.83204126, 0, 1, 0, -0.83204126, 0, 0.5547138, 0, 0, -1.0883213)
+mesh = ExtResource("5_o6xl0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_jyhfs")
+
+[node name="Token3" type="MeshInstance3D" parent="Light Tokens"]
+transform = Transform3D(0.93302894, 0, 0.3598014, 0, 1, 0, -0.3598014, 0, 0.93302894, 0, 0, -2.2297122)
+mesh = ExtResource("5_o6xl0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_jyhfs")
+
+[node name="Token4" type="MeshInstance3D" parent="Light Tokens"]
+transform = Transform3D(0.8353759, 0, -0.5496791, 0, 1, 0, 0.5496791, 0, 0.8353759, 0, 0, -3.3516057)
+mesh = ExtResource("5_o6xl0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("4_jyhfs")
+
+[node name="Dark Tokens" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.89733624, 1.4490464, 1.1157124)
+
+[node name="Token" type="MeshInstance3D" parent="Dark Tokens"]
+mesh = ExtResource("5_o6xl0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_jyhfs")
+
+[node name="Token2" type="MeshInstance3D" parent="Dark Tokens"]
+transform = Transform3D(0.5547138, 0, 0.83204126, 0, 1, 0, -0.83204126, 0, 0.5547138, 0, 0, -1.0883213)
+mesh = ExtResource("5_o6xl0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_jyhfs")
+
+[node name="Token3" type="MeshInstance3D" parent="Dark Tokens"]
+transform = Transform3D(0.93302894, 0, 0.3598014, 0, 1, 0, -0.3598014, 0, 0.93302894, 0, 0, -2.2297122)
+mesh = ExtResource("5_o6xl0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_jyhfs")
+
+[node name="Token4" type="MeshInstance3D" parent="Dark Tokens"]
+transform = Transform3D(0.8353759, 0, -0.5496791, 0, 1, 0, 0.5496791, 0, 0.8353759, 0, 0, -3.3516057)
+mesh = ExtResource("5_o6xl0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("2_jyhfs")
