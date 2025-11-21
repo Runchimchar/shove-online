@@ -1,0 +1,70 @@
+[gd_scene load_steps=11 format=3 uid="uid://dyermsf8le20f"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_sgp6g"]
+bounce = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sgp6g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o5qli"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_o5qli"]
+material = SubResource("StandardMaterial3D_o5qli")
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_o5qli"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sgp6g"]
+albedo_color = Color(0.8132577, 0.81325775, 0.8132574, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sgp6g"]
+material = SubResource("StandardMaterial3D_sgp6g")
+size = Vector2(20, 20)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sgp6g"]
+sky_top_color = Color(0.57192475, 0.8355359, 0.98891896, 1)
+sky_horizon_color = Color(0.03529412, 0.6039216, 0.9137255, 1)
+sky_curve = 0.17230493
+ground_bottom_color = Color(0.18639621, 0.15665415, 0.12319232, 1)
+ground_horizon_color = Color(0.27862042, 0.47054464, 0.5714583, 1)
+ground_curve = 0.0087054875
+sun_angle_max = 26.15
+sun_curve = 0.21961302
+energy_multiplier = 0.3
+
+[sub_resource type="Sky" id="Sky_o5qli"]
+sky_material = SubResource("ProceduralSkyMaterial_sgp6g")
+
+[sub_resource type="Environment" id="Environment_0wfyh"]
+background_mode = 2
+sky = SubResource("Sky_o5qli")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Ball" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3612914, 0)
+physics_material_override = SubResource("PhysicsMaterial_sgp6g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
+shape = SubResource("SphereShape3D_sgp6g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
+gi_mode = 2
+mesh = SubResource("SphereMesh_o5qli")
+
+[node name="Table" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Table"]
+shape = SubResource("WorldBoundaryShape3D_o5qli")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Table"]
+mesh = SubResource("PlaneMesh_sgp6g")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.5546412, -0.4604713, 0.6930652, 2.1653614e-08, 0.8329213, 0.55339146, -0.83208966, -0.3069336, 0.46197242, 2.8063066, 2.9763212, 1.7970462)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.3907312, 0.5755389, 0.7183899, -6.8227386e-08, -0.78043044, 0.6252426, 0.9205048, -0.24430186, -0.30493847, 2.6201847, -1.1920929e-07, -0.7365124)
+light_color = Color(0.73136896, 0.76204544, 0.75779915, 1)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0wfyh")
